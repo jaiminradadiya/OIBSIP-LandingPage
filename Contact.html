@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="Contact.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Contact Us</h1>
+    <form id="contact-form">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit">Send Message</button>
+        </div>
+    </form>
+    <div class="success-message" id="success-message" style="display: none;">Your message has been sent successfully!</div>
+    <div class="error-message" id="error-message" style="display: none;">Oops! Something went wrong. Please try again later.</div>
+</div>
+
+<script>
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "process.php"); // Replace "process.php" with your server-side script URL
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    document.getElementById("success-message").style.display = "block";
+                    document.getElementById("error-message").style.display = "none";
+                    document.getElementById("contact-form").reset();
+                } else {
+                    document.getElementById("success-message").style.display = "none";
+                    document.getElementById("error-message").style.display = "block";
+                }
+            }
+        };
+        xhr.send(formData);
+    });
+</script>
+
+</body>
+</html>
